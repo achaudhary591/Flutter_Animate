@@ -49,18 +49,42 @@ Route _createRoute() {
 class PhysicsCardDragDemo extends StatelessWidget {
   const PhysicsCardDragDemo({super.key});
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const DraggableCard(
-        child: FlutterLogo(
-          size: 128,
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+              leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon:Icon(Icons.arrow_back_ios),
+                //replace with our own icon data.
+              ),
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+            title: const Text('Tabs Demo'),
+          ),
+          body: const DraggableCard(
+            child: FlutterLogo(
+              size: 128,
+            ),
+          ),
         ),
       ),
     );
   }
 }
+
+
 
 /// A draggable card that moves back to [Alignment.center] when it's
 /// released.
@@ -157,3 +181,4 @@ class _DraggableCardState extends State<DraggableCard>
     );
   }
 }
+
