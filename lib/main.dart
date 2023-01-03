@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 void main() {
   runApp(
@@ -16,19 +17,66 @@ class Page1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(_createRoute());
-          },
-          child: const Text('Go!'),
-        ),
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 50,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment1());
+              },
+              child: const Text('Assignment 1'),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment2());
+              },
+              child: const Text('Assignment 2'),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment3());
+              },
+              child: const Text('Assignment 3'),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-Route _createRoute() {
+Route _assignment1() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const PhysicsCardDragDemo1(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+Route _assignment2() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const PhysicsCardDragDemo(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -44,6 +92,43 @@ Route _createRoute() {
       );
     },
   );
+}
+
+Route _assignment3() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const MyCustomForm(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+class PhysicsCardDragDemo1 extends StatelessWidget {
+  const PhysicsCardDragDemo1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Animate"),
+      ),
+      body: const DraggableCard(
+        child: FlutterLogo(
+          size: 128,
+        ),
+      ),
+    );
+  }
 }
 
 class PhysicsCardDragDemo extends StatelessWidget {
@@ -77,9 +162,10 @@ class PhysicsCardDragDemo extends StatelessWidget {
                 DraggableCard(
                     child: FlutterLogo(
                       size: 128,
+                      //colors: Colors.red,
                       style: FlutterLogoStyle.horizontal,
                       curve: Curves.bounceInOut,
-                      duration: Duration(seconds: 5),
+                      duration: Duration(seconds: 1),
                     ),
                 ),
                 DraggableCard(
@@ -96,6 +182,7 @@ class PhysicsCardDragDemo extends StatelessWidget {
                     style: FlutterLogoStyle.markOnly,
                     curve: Curves.fastOutSlowIn,
                     duration: Duration(seconds: 5),
+                    textColor: Colors.red,
                   ),
                 ),
               ]
@@ -203,4 +290,162 @@ class _DraggableCardState extends State<DraggableCard>
     );
   }
 }
+
+//Assignment 3 started
+
+class MyCustomForm extends StatelessWidget {
+  const MyCustomForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const appTitle = 'Form Validation Demo';
+
+    return MaterialApp(
+      title: appTitle,
+      home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon:const Icon(Icons.arrow_back_rounded),
+            //replace with our own icon data.
+          ),
+          title: const Text(appTitle),
+        ),
+        body: const MyCustomFormHelper(),
+      ),
+    );
+  }
+}
+
+class MyCustomFormHelper extends StatefulWidget {
+  const MyCustomFormHelper({super.key});
+
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
+}
+
+// Create a corresponding State class.
+// This class holds data related to the form.
+class MyCustomFormState extends State<MyCustomFormHelper> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  //
+  // Note: This is a GlobalKey<FormState>,
+  // not a GlobalKey<MyCustomFormState>.
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  String? validatePassword(String value) {
+    if (value.isEmpty) {
+      return "* Required";
+    } else if (value.length < 6) {
+      return "Password should be atleast 6 characters";
+    } else if (value.length > 15) {
+      return "Password should not be greater than 15 characters";
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: SingleChildScrollView(
+        child: Form(
+          autovalidateMode: AutovalidateMode.always, //check for validation while typing
+          key: formkey,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 60.0),
+                child: Center(
+                  child: SizedBox(
+                      width: 200,
+                      height: 150,
+                      child: Image.asset('assets/images/flutter-logo.png')),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Email',
+                        hintText: 'Enter valid email id as abc@gmail.com'),
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: "* Required"),
+                      EmailValidator(errorText: "Enter valid email id"),
+                    ])),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 15, bottom: 0),
+                child: TextFormField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        hintText: 'Enter secure password'),
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: "* Required"),
+                      MinLengthValidator(6,
+                          errorText: "Password should be atleast 6 characters"),
+                      MaxLengthValidator(15,
+                          errorText:
+                          "Password should not be greater than 15 characters")
+                    ])
+                  //validatePassword,        //Function to check validation
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  //TODO FORGOT PASSWORD SCREEN GOES HERE
+                },
+                child: const Text(
+                  'Forgot Password',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20)),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (formkey.currentState!.validate()) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => const Page1()));
+                      print("Validated");
+                    } else {
+                      print("Not Validated");
+                    }
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              const Text('New User? Create Account')
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
