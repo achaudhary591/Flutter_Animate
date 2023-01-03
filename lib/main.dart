@@ -453,46 +453,30 @@ class FormApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Sign Up Form';
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Form Demo',
-      theme: ThemeData(),
-      home: const FormPage(title: 'Flutter Form Demo Page'),
-    );
-  }
-}
-
-class FormPage extends StatefulWidget {
-  const FormPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _FormPageState createState() => _FormPageState();
-}
-
-class _FormPageState extends State<FormPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon:const Icon(Icons.arrow_back_rounded),
-          //replace with our own icon data.
+      title: appTitle,
+      home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon:const Icon(Icons.arrow_back_rounded),
+            //replace with our own icon data.
+          ),
+          title: const Text(appTitle),
         ),
-        title: Text(widget.title),
+        body: const SignUpForm(),
       ),
-      body: Container(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: SignUpForm()),
     );
   }
 }
 
 class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
+
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
@@ -514,16 +498,16 @@ class _SignUpFormState extends State<SignUpForm> {
   void loadGenderList() {
     genderList = [];
     genderList.add(const DropdownMenuItem(
-      child: Text('Male'),
       value: 0,
+      child: Text('Male'),
     ));
     genderList.add(const DropdownMenuItem(
-      child: Text('Female'),
       value: 1,
+      child: Text('Female'),
     ));
     genderList.add(const DropdownMenuItem(
-      child: Text('Others'),
       value: 2,
+      child: Text('Others'),
     ));
   }
 
@@ -705,9 +689,9 @@ class _SignUpFormState extends State<SignUpForm> {
       if (_formKey.currentState!.validate() && _termsChecked) {
         _formKey.currentState?.save();
 
-        print("Name " + _name);
-        print("Email " + _email);
-        print("Age " + _age.toString());
+        print("Name $_name");
+        print("Email $_email");
+        print("Age $_age");
         switch (_selectedGender) {
           case 0:
             print("Gender Male");
@@ -719,16 +703,17 @@ class _SignUpFormState extends State<SignUpForm> {
             print("Gender Others");
             break;
         }
-        print("Marital Status " + _maritalStatus);
-        print("Password " + _password);
-        print("Termschecked " + _termsChecked.toString());
+        print("Marital Status $_maritalStatus");
+        print("Password $_password");
+        print("Terms-checked $_termsChecked");
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Form Submitted')));
       }
     }
 
     formWidget.add(ElevatedButton(
-        child: const Text('Sign Up'), onPressed: onPressedSubmit));
+        onPressed: onPressedSubmit,
+        child: const Text('Sign Up')));
 
     return formWidget;
   }
