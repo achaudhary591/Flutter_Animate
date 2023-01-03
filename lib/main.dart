@@ -49,7 +49,6 @@ Route _createRoute() {
 class PhysicsCardDragDemo extends StatelessWidget {
   const PhysicsCardDragDemo({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,7 +60,7 @@ class PhysicsCardDragDemo extends StatelessWidget {
                 onPressed: (){
                   Navigator.pop(context);
                 },
-                icon:Icon(Icons.arrow_back_ios),
+                icon:const Icon(Icons.arrow_back_rounded),
                 //replace with our own icon data.
               ),
             bottom: const TabBar(
@@ -73,10 +72,33 @@ class PhysicsCardDragDemo extends StatelessWidget {
             ),
             title: const Text('Tabs Demo'),
           ),
-          body: const DraggableCard(
-            child: FlutterLogo(
-              size: 128,
-            ),
+          body: const TabBarView(
+              children: [
+                DraggableCard(
+                    child: FlutterLogo(
+                      size: 128,
+                      style: FlutterLogoStyle.horizontal,
+                      curve: Curves.bounceInOut,
+                      duration: Duration(seconds: 5),
+                    ),
+                ),
+                DraggableCard(
+                    child: FlutterLogo(
+                      size: 128,
+                      style: FlutterLogoStyle.stacked,
+                      curve: Curves.linearToEaseOut,
+                      duration: Duration(seconds: 5),
+                    ),
+                ),
+                DraggableCard(
+                  child: FlutterLogo(
+                    size: 128,
+                    style: FlutterLogoStyle.markOnly,
+                    curve: Curves.fastOutSlowIn,
+                    duration: Duration(seconds: 5),
+                  ),
+                ),
+              ]
           ),
         ),
       ),
