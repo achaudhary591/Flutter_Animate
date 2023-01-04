@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(
@@ -68,7 +69,7 @@ class Page1 extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(_assignment3());
+                Navigator.of(context).push(_assignment4());
               },
               child:  Text(
                   'Assignment 4',
@@ -121,6 +122,24 @@ Route _assignment2() {
 Route _assignment3() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const MyCustomForm(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+Route _assignment4() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const ImagesDisplay(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -743,5 +762,61 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 }
 
+//Images from network and save file
+
+class ImagesDisplay extends StatelessWidget {
+  const ImagesDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              icon:const Icon(Icons.arrow_back_rounded),
+              //replace with our own icon data.
+            ),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: "N/W"),
+                Tab(text: "Local"),
+                Tab(text: "Fade"),
+                Tab(text: "Cache",)
+              ],
+            ),
+            title: const Text('Local and Network Images'),
+          ),
+          body:  TabBarView(
+              children: [
+                Image.network('https://docs.flutter.dev/assets/images/dash/dash-fainting.gif'),
+                Image.asset(
+                    'assets/images/image1.jpg',
+                ),
+                FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/loading.gif',
+                    image: 'https://picsum.photos/400?image=10',
+                ),
+                CachedNetworkImage(
+                  imageUrl: 'https://cdn.pixabay.com/photo/2016/11/29/12/13/fence-1869401_960_720.jpg',
+                  progressIndicatorBuilder: (_ , url , download){
+                    if(download.progress != null){
+                      final percent = download.progress! * 100;
+                      return Text('$percent% done loading');
+                    }
+                    return Text('Loaded $url!');
+                  },
+                )
+              ]
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 
