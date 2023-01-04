@@ -802,14 +802,8 @@ class ImagesDisplay extends StatelessWidget {
                     image: 'https://picsum.photos/400?image=10',
                 ),
                 CachedNetworkImage(
+                  placeholder: (context, url) => const CircularProgressIndicator(),
                   imageUrl: 'https://cdn.pixabay.com/photo/2016/11/29/12/13/fence-1869401_960_720.jpg',
-                  progressIndicatorBuilder: (_ , url , download){
-                    if(download.progress != null){
-                      final percent = download.progress! * 100;
-                      return Text('$percent% done loading');
-                    }
-                    return Text('Loaded $url!');
-                  },
                 )
               ]
           ),
