@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(
@@ -27,7 +28,10 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment1());
               },
-              child: const Text('Assignment 1'),
+              child:  Text(
+                  'Assignment 1',
+                  style: GoogleFonts.getFont('Lato' , fontSize: 15 , fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           const SizedBox(
@@ -38,7 +42,10 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment2());
               },
-              child: const Text('Assignment 2'),
+              child: Text(
+                  'Assignment 2',
+                  style: GoogleFonts.getFont('Anybody' , fontSize: 12 , fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           const SizedBox(
@@ -49,7 +56,24 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment3());
               },
-              child: const Text('Assignment 3'),
+              child:  Text(
+                  'Assignment 3',
+                  style: GoogleFonts.getFont('Sevillana' , fontSize: 18 ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment3());
+              },
+              child:  Text(
+                  'Assignment 4',
+                   style: GoogleFonts.getFont('Caveat' , fontSize: 20 , fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
