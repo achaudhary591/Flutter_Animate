@@ -77,6 +77,20 @@ class Page1 extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment5());
+              },
+              child:  Text(
+                'Assignment 5',
+                style: GoogleFonts.getFont('Pacifico' , fontSize: 16 , fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -140,6 +154,24 @@ Route _assignment3() {
 Route _assignment4() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const ImagesDisplay(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+Route _assignment5() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const GridList(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -807,6 +839,60 @@ class ImagesDisplay extends StatelessWidget {
                 )
               ]
           ),
+        ),
+      ),
+    );
+  }
+}
+
+//grid assignment
+
+
+
+class GridList extends StatelessWidget {
+  const GridList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Grid List';
+
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(title),
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon:const Icon(Icons.arrow_back_rounded),
+            //replace with our own icon data.
+          ),
+        ),
+        body: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 3,
+              mainAxisSpacing: 3,
+            ),
+          children: [
+            Image.network('https://picsum.photos/250?image=19'),
+            Image.network('https://picsum.photos/250?image=18'),
+            Image.network('https://picsum.photos/250?image=6'),
+            Image.network('https://picsum.photos/250?image=16'),
+            Image.network('https://picsum.photos/250?image=11'),
+            Image.network('https://picsum.photos/250?image=2'),
+            Image.network('https://picsum.photos/250?image=15'),
+            Image.network('https://picsum.photos/250?image=12'),
+            Image.network('https://picsum.photos/250?image=3'),
+            Image.network('https://picsum.photos/250?image=1'),
+            Image.network('https://picsum.photos/250?image=8'),
+            Image.network('https://picsum.photos/250?image=5'),
+            Image.network('https://picsum.photos/250?image=10'),
+            Image.network('https://picsum.photos/250?image=17'),
+            Image.network('https://picsum.photos/250?image=14'),
+            Image.network('https://picsum.photos/250?image=13'),
+          ],
         ),
       ),
     );
