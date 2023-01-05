@@ -854,49 +854,173 @@ class GridList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const title = 'Grid List';
-
     return MaterialApp(
-      title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(title),
-          leading: IconButton(
-            onPressed: (){
-              Navigator.pop(context);
-            },
-            icon:const Icon(Icons.arrow_back_rounded),
-            //replace with our own icon data.
-          ),
-        ),
-        body: GridView(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 3,
-              mainAxisSpacing: 3,
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              icon:const Icon(Icons.arrow_back_rounded),
+              //replace with our own icon data.
             ),
-          children: [
-            Image.network('https://picsum.photos/250?image=19'),
-            Image.network('https://picsum.photos/250?image=18'),
-            Image.network('https://picsum.photos/250?image=6'),
-            Image.network('https://picsum.photos/250?image=16'),
-            Image.network('https://picsum.photos/250?image=11'),
-            Image.network('https://picsum.photos/250?image=2'),
-            Image.network('https://picsum.photos/250?image=15'),
-            Image.network('https://picsum.photos/250?image=12'),
-            Image.network('https://picsum.photos/250?image=3'),
-            Image.network('https://picsum.photos/250?image=1'),
-            Image.network('https://picsum.photos/250?image=8'),
-            Image.network('https://picsum.photos/250?image=5'),
-            Image.network('https://picsum.photos/250?image=10'),
-            Image.network('https://picsum.photos/250?image=17'),
-            Image.network('https://picsum.photos/250?image=14'),
-            Image.network('https://picsum.photos/250?image=13'),
-          ],
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: "Grid"),
+                Tab(text: "Horizontal"),
+                Tab(text: "Mixed"),
+              ],
+            ),
+            title: const Text('Types Of Lists'),
+          ),
+          body:  TabBarView(
+              children: [
+                //child 1
+                GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 3,
+                    mainAxisSpacing: 3,
+                  ),
+                  children: [
+                    Image.network('https://picsum.photos/250?image=19'),
+                    Image.network('https://picsum.photos/250?image=18'),
+                    Image.network('https://picsum.photos/250?image=6'),
+                    Image.network('https://picsum.photos/250?image=16'),
+                    Image.network('https://picsum.photos/250?image=11'),
+                    Image.network('https://picsum.photos/250?image=2'),
+                    Image.network('https://picsum.photos/250?image=15'),
+                    Image.network('https://picsum.photos/250?image=12'),
+                    Image.network('https://picsum.photos/250?image=3'),
+                    Image.network('https://picsum.photos/250?image=1'),
+                    Image.network('https://picsum.photos/250?image=8'),
+                    Image.network('https://picsum.photos/250?image=5'),
+                    Image.network('https://picsum.photos/250?image=10'),
+                    Image.network('https://picsum.photos/250?image=17'),
+                    Image.network('https://picsum.photos/250?image=14'),
+                    Image.network('https://picsum.photos/250?image=13'),
+                    Image.network('https://picsum.photos/250?image=7'),
+                    Image.network('https://picsum.photos/250?image=9'),
+                  ],
+                ),
+
+                //child 2
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20.0),
+                  height: 200.0,
+                  child: ListView(
+                    // This next line does the trick.
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      Container(
+                        width: 160.0,
+                        color: Colors.red,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.green,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.yellow,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.orange,
+                      ),
+                    ],
+                  ),
+                ),
+
+                //child 3
+                GridListHelper(
+                  items: List<ListItem>.generate(
+                    1000,
+                        (i) => i % 6 == 0
+                        ? HeadingItem('Heading $i')
+                        : MessageItem('Sender $i', 'Message body $i'),
+                  ),
+                ),
+              ]
+          ),
         ),
       ),
     );
   }
 }
 
+class GridListHelper extends StatelessWidget {
+  final List<ListItem> items;
+
+  const GridListHelper({super.key, required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Mixed List';
+
+    return Scaffold(
+        body: ListView.builder(
+          // Let the ListView know how many items it needs to build.
+          itemCount: items.length,
+          // Provide a builder function. This is where the magic happens.
+          // Convert each item into a widget based on the type of item it is.
+          itemBuilder: (context, index) {
+            final item = items[index];
+
+            return ListTile(
+              title: item.buildTitle(context),
+              subtitle: item.buildSubtitle(context),
+            );
+          },
+        ),
+    );
+  }
+}
+
+/// The base class for the different types of items the list can contain.
+abstract class ListItem {
+  /// The title line to show in a list item.
+  Widget buildTitle(BuildContext context);
+
+  /// The subtitle line, if any, to show in a list item.
+  Widget buildSubtitle(BuildContext context);
+}
+
+/// A ListItem that contains data to display a heading.
+class HeadingItem implements ListItem {
+  final String heading;
+
+  HeadingItem(this.heading);
+
+  @override
+  Widget buildTitle(BuildContext context) {
+    return Text(
+      heading,
+      style: Theme.of(context).textTheme.headline5,
+    );
+  }
+
+  @override
+  Widget buildSubtitle(BuildContext context) => const SizedBox.shrink();
+}
+
+/// A ListItem that contains data to display a message.
+class MessageItem implements ListItem {
+  final String sender;
+  final String body;
+
+  MessageItem(this.sender, this.body);
+
+  @override
+  Widget buildTitle(BuildContext context) => Text(sender);
+
+  @override
+  Widget buildSubtitle(BuildContext context) => Text(body);
+}
 
