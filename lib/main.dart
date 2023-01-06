@@ -6,7 +6,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+     const MaterialApp(
+       debugShowCheckedModeBanner: false,
       home: Page1(),
     ),
   );
@@ -18,7 +19,10 @@ class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Flutter Course Assignments 🤟'),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           const SizedBox(
@@ -88,6 +92,20 @@ class Page1 extends StatelessWidget {
               child:  Text(
                 'Assignment 5',
                 style: GoogleFonts.getFont('Pacifico' , fontSize: 16 , fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment6());
+              },
+              child:  Text(
+                'Assignment 6',
+                style: GoogleFonts.getFont('Lilita One' , fontSize: 16 , fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -172,6 +190,24 @@ Route _assignment4() {
 Route _assignment5() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const GridList(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+Route _assignment6() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const CustomNavigation(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -1024,3 +1060,310 @@ class MessageItem implements ListItem {
   Widget buildSubtitle(BuildContext context) => Text(body);
 }
 
+
+//custom navigation(Assignment 6)
+
+class CustomNavigation extends StatelessWidget {
+  const CustomNavigation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      routes: {
+        ExtractArgumentsScreen.routeName: (context) =>
+        const ExtractArgumentsScreen(),
+      },
+
+      onGenerateRoute: (settings) {
+        // If you push the PassArguments route
+        if (settings.name == PassArgumentsScreen.routeName) {
+          // Cast the arguments to the correct
+          // type: ScreenArguments.
+          final args = settings.arguments as ScreenArguments;
+
+          // Then, extract the required data from
+          // the arguments and pass the data to the
+          // correct screen.
+          return MaterialPageRoute(
+            builder: (context) {
+              return PassArgumentsScreen(
+                title: args.title,
+                message: args.message,
+              );
+            },
+          );
+        }
+
+        assert(false, 'Need to implement ${settings.name}');
+        return null;
+      },
+
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              icon:const Icon(Icons.arrow_back_rounded),
+              //replace with our own icon data.
+            ),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: "Hero"),
+                Tab(text: "Intent"),
+                Tab(text: "DPass",),
+                Tab(text: "CallbackI",)
+              ],
+            ),
+            title: const Text('Custom Navigations'),
+          ),
+          body:  TabBarView(
+              children: [
+                // child1
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const DetailScreen();
+                      }));
+                    },
+                    child: Hero(
+                      tag: 'imageHero',
+                      child: Image.network(
+                        'https://picsum.photos/250?image=9',
+                      ),
+                    ),
+                  ),
+                ),
+
+                // child2
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Go back!'),
+                  ),
+                ),
+
+                // child3
+                const HomeScreen1(),
+
+                // child4
+
+
+              ]
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  const DetailScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: Image.network(
+              'https://picsum.photos/400?image=9',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}
+
+class DPass extends StatelessWidget {
+  const DPass({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      // Provide a function to handle named routes.
+      // Use this function to identify the named
+      // route being pushed, and create the correct
+      // Screen.
+
+
+    );
+  }
+}
+
+class HomeScreen1 extends StatelessWidget {
+  const HomeScreen1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // A button that navigates to a named route.
+            // The named route extracts the arguments
+            // by itself.
+            ElevatedButton(
+              onPressed: () {
+                // When the user taps the button,
+                // navigate to a named route and
+                // provide the arguments as an optional
+                // parameter.
+                Navigator.pushNamed(
+                  context,
+                  ExtractArgumentsScreen.routeName,
+                  arguments: ScreenArguments(
+                    'Extract Arguments Screen',
+                    'This message is extracted in the build method.',
+                  ),
+                );
+              },
+              child: const Text('Navigate to screen that extracts arguments'),
+            ),
+            // A button that navigates to a named route.
+            // For this route, extract the arguments in
+            // the onGenerateRoute function and pass them
+            // to the screen.
+            ElevatedButton(
+              onPressed: () {
+                // When the user taps the button, navigate
+                // to a named route and provide the arguments
+                // as an optional parameter.
+                Navigator.pushNamed(
+                  context,
+                  PassArgumentsScreen.routeName,
+                  arguments: ScreenArguments(
+                    'Accept Arguments Screen',
+                    'This message is extracted in the onGenerateRoute '
+                        'function.',
+                  ),
+                );
+              },
+              child: const Text('Navigate to a named that accepts arguments'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class ExtractArgumentsScreen extends StatelessWidget {
+  const ExtractArgumentsScreen({super.key});
+
+  static const routeName = '/extractArguments';
+
+  @override
+  Widget build(BuildContext context) {
+    // Extract the arguments from the current ModalRoute
+    // settings and cast them as ScreenArguments.
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+
+    return Scaffold(
+      body: Center(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(args.message),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Go back!'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// A Widget that accepts the necessary arguments via the
+// constructor.
+class PassArgumentsScreen extends StatelessWidget {
+  static const routeName = '/passArguments';
+
+  final String title;
+  final String message;
+
+  // This Widget accepts the arguments as constructor
+  // parameters. It does not extract the arguments from
+  // the ModalRoute.
+  //
+  // The arguments are extracted by the onGenerateRoute
+  // function provided to the MaterialApp widget.
+  const PassArgumentsScreen({
+    super.key,
+    required this.title,
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(message),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Go back!'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// You can pass any object to the arguments parameter.
+// In this example, create a class that contains both
+// a customizable title and message.
+class ScreenArguments {
+  final String title;
+  final String message;
+
+  ScreenArguments(this.title, this.message);
+}
