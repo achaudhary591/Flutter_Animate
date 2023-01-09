@@ -3,6 +3,10 @@ import 'package:flutter/physics.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 void main() {
   runApp(
@@ -109,6 +113,21 @@ class Page1 extends StatelessWidget {
               ),
             ),
           ),
+
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(_assignment7());
+              },
+              child:  Text(
+                'Assignment 7',
+                style: GoogleFonts.getFont('IBM Plex Mono' , fontSize: 13 , fontWeight: FontWeight.w900),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -208,6 +227,24 @@ Route _assignment5() {
 Route _assignment6() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const CustomNavigation(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+Route _assignment7() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const APINetworking1(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -998,7 +1035,6 @@ class GridListHelper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const title = 'Mixed List';
 
     return Scaffold(
         body: ListView.builder(
@@ -1442,6 +1478,221 @@ class SelectionScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+//assignment 7 ------------------------------------------
+Future<Album> fetchAlbum() async {
+  final response = await http
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+class Album {
+  final int userId;
+  final int id;
+  final String title;
+
+  const Album({
+    required this.userId,
+    required this.id,
+    required this.title,
+  });
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      userId: json['userId'],
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+}
+
+class APINetworking1 extends StatelessWidget {
+  const APINetworking1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              icon:const Icon(Icons.arrow_back_rounded),
+              //replace with our own icon data.
+            ),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: "JSON-Parse"),
+                Tab(text: "Fetch-Data"),
+              ],
+            ),
+            title: const Text('Network and API'),
+          ),
+          body:  const TabBarView(
+              children: [
+                FetchData(),
+                APINetworking(),
+
+              ]
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class APINetworking extends StatefulWidget {
+  const APINetworking({super.key});
+
+  @override
+  State<APINetworking> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<APINetworking> {
+  late Future<Album> futureAlbum;
+
+  @override
+  void initState() {
+    super.initState();
+    futureAlbum = fetchAlbum();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: Center(
+        child: FutureBuilder<Album>(
+          future: futureAlbum,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data!.title);
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            // By default, show a loading spinner.
+            return const CircularProgressIndicator();
+          },
+        ),
+      ),
+    );
+  }
+}
+
+Future<List<Photo>> fetchPhotos(http.Client client) async {
+  final response = await client
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+
+  // Use the compute function to run parsePhotos in a separate isolate.
+  return compute(parsePhotos, response.body);
+}
+
+// A function that converts a response body into a List<Photo>.
+List<Photo> parsePhotos(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Photo>((json) => Photo.fromJson(json)).toList();
+}
+
+class Photo {
+  final int albumId;
+  final int id;
+  final String title;
+  final String url;
+  final String thumbnailUrl;
+
+  const Photo({
+    required this.albumId,
+    required this.id,
+    required this.title,
+    required this.url,
+    required this.thumbnailUrl,
+  });
+
+  factory Photo.fromJson(Map<String, dynamic> json) {
+    return Photo(
+      albumId: json['albumId'] as int,
+      id: json['id'] as int,
+      title: json['title'] as String,
+      url: json['url'] as String,
+      thumbnailUrl: json['thumbnailUrl'] as String,
+    );
+  }
+}
+
+// class FetchData extends StatelessWidget {
+//   const FetchData({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     const appTitle = 'Isolate Demo';
+//
+//     return const Scaffold(
+//       title: appTitle,
+//       home: MyHomePage(title: appTitle),
+//     );
+//   }
+// }
+
+class FetchData extends StatelessWidget {
+  const FetchData({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: FutureBuilder<List<Photo>>(
+        future: fetchPhotos(http.Client()),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            return PhotosList(photos: snapshot.data!);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class PhotosList extends StatelessWidget {
+  const PhotosList({super.key, required this.photos});
+
+  final List<Photo> photos;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: photos.length,
+      itemBuilder: (context, index) {
+        return Image.network(photos[index].thumbnailUrl);
+      },
     );
   }
 }
