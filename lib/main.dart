@@ -10,8 +10,8 @@ import 'package:flutter/foundation.dart';
 
 void main() {
   runApp(
-     const MaterialApp(
-       debugShowCheckedModeBanner: false,
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Page1(),
     ),
   );
@@ -37,9 +37,10 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment1());
               },
-              child:  Text(
-                  'Assignment 1',
-                  style: GoogleFonts.getFont('Lato' , fontSize: 15 , fontWeight: FontWeight.bold),
+              child: Text(
+                'Assignment 1',
+                style: GoogleFonts.getFont('Lato',
+                    fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -52,8 +53,9 @@ class Page1 extends StatelessWidget {
                 Navigator.of(context).push(_assignment2());
               },
               child: Text(
-                  'Assignment 2',
-                  style: GoogleFonts.getFont('Anybody' , fontSize: 12 , fontWeight: FontWeight.bold),
+                'Assignment 2',
+                style: GoogleFonts.getFont('Anybody',
+                    fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -65,9 +67,9 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment3());
               },
-              child:  Text(
-                  'Assignment 3',
-                  style: GoogleFonts.getFont('Sevillana' , fontSize: 18 ),
+              child: Text(
+                'Assignment 3',
+                style: GoogleFonts.getFont('Sevillana', fontSize: 18),
               ),
             ),
           ),
@@ -79,9 +81,10 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment4());
               },
-              child:  Text(
-                  'Assignment 4',
-                   style: GoogleFonts.getFont('Caveat' , fontSize: 20 , fontWeight: FontWeight.bold),
+              child: Text(
+                'Assignment 4',
+                style: GoogleFonts.getFont('Caveat',
+                    fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -93,9 +96,10 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment5());
               },
-              child:  Text(
+              child: Text(
                 'Assignment 5',
-                style: GoogleFonts.getFont('Pacifico' , fontSize: 16 , fontWeight: FontWeight.bold),
+                style: GoogleFonts.getFont('Pacifico',
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -107,13 +111,13 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment6());
               },
-              child:  Text(
+              child: Text(
                 'Assignment 6',
-                style: GoogleFonts.getFont('Lilita One' , fontSize: 16 , fontWeight: FontWeight.bold),
+                style: GoogleFonts.getFont('Lilita One',
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ),
-
           const SizedBox(
             height: 20,
           ),
@@ -122,9 +126,10 @@ class Page1 extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(_assignment7());
               },
-              child:  Text(
+              child: Text(
                 'Assignment 7',
-                style: GoogleFonts.getFont('IBM Plex Mono' , fontSize: 13 , fontWeight: FontWeight.w900),
+                style: GoogleFonts.getFont('IBM Plex Mono',
+                    fontSize: 13, fontWeight: FontWeight.w900),
               ),
             ),
           ),
@@ -136,7 +141,8 @@ class Page1 extends StatelessWidget {
 
 Route _assignment1() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const PhysicsCardDragDemo1(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const PhysicsCardDragDemo1(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -154,7 +160,8 @@ Route _assignment1() {
 
 Route _assignment2() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const PhysicsCardDragDemo(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const PhysicsCardDragDemo(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -172,7 +179,8 @@ Route _assignment2() {
 
 Route _assignment3() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const MyCustomForm(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const MyCustomForm(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -190,7 +198,8 @@ Route _assignment3() {
 
 Route _assignment4() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const ImagesDisplay(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const ImagesDisplay(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -226,7 +235,8 @@ Route _assignment5() {
 
 Route _assignment6() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const CustomNavigation(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const CustomNavigation(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -244,7 +254,8 @@ Route _assignment6() {
 
 Route _assignment7() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const APINetworking1(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const APINetworking1(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -289,13 +300,13 @@ class PhysicsCardDragDemo extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-              leading: IconButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                icon:const Icon(Icons.arrow_back_rounded),
-                //replace with our own icon data.
-              ),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_rounded),
+              //replace with our own icon data.
+            ),
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.directions_car)),
@@ -305,43 +316,39 @@ class PhysicsCardDragDemo extends StatelessWidget {
             ),
             title: const Text('Tabs Demo'),
           ),
-          body: const TabBarView(
-              children: [
-                DraggableCard(
-                    child: FlutterLogo(
-                      size: 128,
-                      //colors: Colors.red,
-                      style: FlutterLogoStyle.horizontal,
-                      curve: Curves.bounceInOut,
-                      duration: Duration(seconds: 1),
-                    ),
-                ),
-                DraggableCard(
-                    child: FlutterLogo(
-                      size: 128,
-                      style: FlutterLogoStyle.stacked,
-                      curve: Curves.linearToEaseOut,
-                      duration: Duration(seconds: 5),
-                    ),
-                ),
-                DraggableCard(
-                  child: FlutterLogo(
-                    size: 128,
-                    style: FlutterLogoStyle.markOnly,
-                    curve: Curves.fastOutSlowIn,
-                    duration: Duration(seconds: 5),
-                    textColor: Colors.red,
-                  ),
-                ),
-              ]
-          ),
+          body: const TabBarView(children: [
+            DraggableCard(
+              child: FlutterLogo(
+                size: 128,
+                //colors: Colors.red,
+                style: FlutterLogoStyle.horizontal,
+                curve: Curves.bounceInOut,
+                duration: Duration(seconds: 1),
+              ),
+            ),
+            DraggableCard(
+              child: FlutterLogo(
+                size: 128,
+                style: FlutterLogoStyle.stacked,
+                curve: Curves.linearToEaseOut,
+                duration: Duration(seconds: 5),
+              ),
+            ),
+            DraggableCard(
+              child: FlutterLogo(
+                size: 128,
+                style: FlutterLogoStyle.markOnly,
+                curve: Curves.fastOutSlowIn,
+                duration: Duration(seconds: 5),
+                textColor: Colors.red,
+              ),
+            ),
+          ]),
         ),
       ),
     );
   }
 }
-
-
 
 /// A draggable card that moves back to [Alignment.center] when it's
 /// released.
@@ -453,10 +460,10 @@ class MyCustomForm extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
             },
-            icon:const Icon(Icons.arrow_back_rounded),
+            icon: const Icon(Icons.arrow_back_rounded),
             //replace with our own icon data.
           ),
           title: const Text(appTitle),
@@ -501,10 +508,10 @@ class MyCustomFormState extends State<MyCustomFormHelper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SingleChildScrollView(
         child: Form(
-          autovalidateMode: AutovalidateMode.always, //check for validation while typing
+          autovalidateMode: AutovalidateMode.always,
+          //check for validation while typing
           key: formkey,
           child: Column(
             children: <Widget>[
@@ -547,10 +554,10 @@ class MyCustomFormState extends State<MyCustomFormHelper> {
                           errorText: "Password should be atleast 6 characters"),
                       MaxLengthValidator(15,
                           errorText:
-                          "Password should not be greater than 15 characters")
+                              "Password should not be greater than 15 characters")
                     ])
-                  //validatePassword,        //Function to check validation
-                ),
+                    //validatePassword,        //Function to check validation
+                    ),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -608,10 +615,10 @@ class FormApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
             },
-            icon:const Icon(Icons.arrow_back_rounded),
+            icon: const Icon(Icons.arrow_back_rounded),
             //replace with our own icon data.
           ),
           title: const Text(appTitle),
@@ -675,7 +682,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     formWidget.add(TextFormField(
       decoration:
-      const InputDecoration(labelText: 'Enter Name', hintText: 'Name'),
+          const InputDecoration(labelText: 'Enter Name', hintText: 'Name'),
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter a name';
@@ -707,7 +714,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     formWidget.add(TextFormField(
       decoration:
-      const InputDecoration(labelText: 'Enter Email', hintText: 'Email'),
+          const InputDecoration(labelText: 'Enter Email', hintText: 'Email'),
       keyboardType: TextInputType.emailAddress,
       validator: validateEmail,
       onSaved: (value) {
@@ -719,7 +726,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     formWidget.add(TextFormField(
       decoration:
-      const InputDecoration(hintText: 'Age', labelText: 'Enter Age'),
+          const InputDecoration(hintText: 'Age', labelText: 'Enter Age'),
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
@@ -823,9 +830,9 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       subtitle: !_termsChecked
           ? const Text(
-        'Required',
-        style: TextStyle(color: Colors.red, fontSize: 12.0),
-      )
+              'Required',
+              style: TextStyle(color: Colors.red, fontSize: 12.0),
+            )
           : null,
       title: const Text(
         'I agree to the terms and condition',
@@ -860,8 +867,7 @@ class _SignUpFormState extends State<SignUpForm> {
     }
 
     formWidget.add(ElevatedButton(
-        onPressed: onPressedSubmit,
-        child: const Text('Sign Up')));
+        onPressed: onPressedSubmit, child: const Text('Sign Up')));
 
     return formWidget;
   }
@@ -880,10 +886,10 @@ class ImagesDisplay extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
-              icon:const Icon(Icons.arrow_back_rounded),
+              icon: const Icon(Icons.arrow_back_rounded),
               //replace with our own icon data.
             ),
             bottom: const TabBar(
@@ -891,27 +897,29 @@ class ImagesDisplay extends StatelessWidget {
                 Tab(text: "N/W"),
                 Tab(text: "Local"),
                 Tab(text: "Fade"),
-                Tab(text: "Cache",)
+                Tab(
+                  text: "Cache",
+                )
               ],
             ),
             title: const Text('Local and Network Images'),
           ),
-          body:  TabBarView(
-              children: [
-                Image.network('https://docs.flutter.dev/assets/images/dash/dash-fainting.gif'),
-                Image.asset(
-                    'assets/images/image1.jpg',
-                ),
-                FadeInImage.assetNetwork(
-                    placeholder: 'assets/images/loading.gif',
-                    image: 'https://picsum.photos/400?image=10',
-                ),
-                CachedNetworkImage(
-                  placeholder: (context, url) => const CircularProgressIndicator(),
-                  imageUrl: 'https://cdn.pixabay.com/photo/2016/11/29/12/13/fence-1869401_960_720.jpg',
-                )
-              ]
-          ),
+          body: TabBarView(children: [
+            Image.network(
+                'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif'),
+            Image.asset(
+              'assets/images/image1.jpg',
+            ),
+            FadeInImage.assetNetwork(
+              placeholder: 'assets/images/loading.gif',
+              image: 'https://picsum.photos/400?image=10',
+            ),
+            CachedNetworkImage(
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              imageUrl:
+                  'https://cdn.pixabay.com/photo/2016/11/29/12/13/fence-1869401_960_720.jpg',
+            )
+          ]),
         ),
       ),
     );
@@ -919,8 +927,6 @@ class ImagesDisplay extends StatelessWidget {
 }
 
 //grid assignment
-
-
 
 class GridList extends StatelessWidget {
   const GridList({super.key});
@@ -933,10 +939,10 @@ class GridList extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
-              icon:const Icon(Icons.arrow_back_rounded),
+              icon: const Icon(Icons.arrow_back_rounded),
               //replace with our own icon data.
             ),
             bottom: const TabBar(
@@ -948,80 +954,78 @@ class GridList extends StatelessWidget {
             ),
             title: const Text('Types Of Lists'),
           ),
-          body:  TabBarView(
+          body: TabBarView(children: [
+            //child 1
+            GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 3,
+                mainAxisSpacing: 3,
+              ),
               children: [
-                //child 1
-                GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 3,
-                    mainAxisSpacing: 3,
-                  ),
-                  children: [
-                    Image.network('https://picsum.photos/250?image=19'),
-                    Image.network('https://picsum.photos/250?image=18'),
-                    Image.network('https://picsum.photos/250?image=6'),
-                    Image.network('https://picsum.photos/250?image=16'),
-                    Image.network('https://picsum.photos/250?image=11'),
-                    Image.network('https://picsum.photos/250?image=2'),
-                    Image.network('https://picsum.photos/250?image=15'),
-                    Image.network('https://picsum.photos/250?image=12'),
-                    Image.network('https://picsum.photos/250?image=3'),
-                    Image.network('https://picsum.photos/250?image=1'),
-                    Image.network('https://picsum.photos/250?image=8'),
-                    Image.network('https://picsum.photos/250?image=5'),
-                    Image.network('https://picsum.photos/250?image=10'),
-                    Image.network('https://picsum.photos/250?image=17'),
-                    Image.network('https://picsum.photos/250?image=14'),
-                    Image.network('https://picsum.photos/250?image=13'),
-                    Image.network('https://picsum.photos/250?image=7'),
-                    Image.network('https://picsum.photos/250?image=9'),
-                  ],
-                ),
+                Image.network('https://picsum.photos/250?image=19'),
+                Image.network('https://picsum.photos/250?image=18'),
+                Image.network('https://picsum.photos/250?image=6'),
+                Image.network('https://picsum.photos/250?image=16'),
+                Image.network('https://picsum.photos/250?image=11'),
+                Image.network('https://picsum.photos/250?image=2'),
+                Image.network('https://picsum.photos/250?image=15'),
+                Image.network('https://picsum.photos/250?image=12'),
+                Image.network('https://picsum.photos/250?image=3'),
+                Image.network('https://picsum.photos/250?image=1'),
+                Image.network('https://picsum.photos/250?image=8'),
+                Image.network('https://picsum.photos/250?image=5'),
+                Image.network('https://picsum.photos/250?image=10'),
+                Image.network('https://picsum.photos/250?image=17'),
+                Image.network('https://picsum.photos/250?image=14'),
+                Image.network('https://picsum.photos/250?image=13'),
+                Image.network('https://picsum.photos/250?image=7'),
+                Image.network('https://picsum.photos/250?image=9'),
+              ],
+            ),
 
-                //child 2
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20.0),
-                  height: 200.0,
-                  child: ListView(
-                    // This next line does the trick.
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      Container(
-                        width: 160.0,
-                        color: Colors.red,
-                      ),
-                      Container(
-                        width: 160.0,
-                        color: Colors.blue,
-                      ),
-                      Container(
-                        width: 160.0,
-                        color: Colors.green,
-                      ),
-                      Container(
-                        width: 160.0,
-                        color: Colors.yellow,
-                      ),
-                      Container(
-                        width: 160.0,
-                        color: Colors.orange,
-                      ),
-                    ],
+            //child 2
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 20.0),
+              height: 200.0,
+              child: ListView(
+                // This next line does the trick.
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Container(
+                    width: 160.0,
+                    color: Colors.red,
                   ),
-                ),
+                  Container(
+                    width: 160.0,
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    width: 160.0,
+                    color: Colors.green,
+                  ),
+                  Container(
+                    width: 160.0,
+                    color: Colors.yellow,
+                  ),
+                  Container(
+                    width: 160.0,
+                    color: Colors.orange,
+                  ),
+                ],
+              ),
+            ),
 
-                //child 3
-                GridListHelper(
-                  items: List<ListItem>.generate(
-                    1000,
-                        (i) => i % 6 == 0
-                        ? HeadingItem('Heading $i')
-                        : MessageItem('Sender $i', 'Message body $i'),
-                  ),
-                ),
-              ]
-          ),
+            //child 3
+            GridListHelper(
+              items: List<ListItem>.generate(
+                1000,
+                (i) => i % 6 == 0
+                    ? HeadingItem('Heading $i')
+                    : MessageItem('Sender $i', 'Message body $i'),
+              ),
+            ),
+          ]),
         ),
       ),
     );
@@ -1035,22 +1039,21 @@ class GridListHelper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        body: ListView.builder(
-          // Let the ListView know how many items it needs to build.
-          itemCount: items.length,
-          // Provide a builder function. This is where the magic happens.
-          // Convert each item into a widget based on the type of item it is.
-          itemBuilder: (context, index) {
-            final item = items[index];
+      body: ListView.builder(
+        // Let the ListView know how many items it needs to build.
+        itemCount: items.length,
+        // Provide a builder function. This is where the magic happens.
+        // Convert each item into a widget based on the type of item it is.
+        itemBuilder: (context, index) {
+          final item = items[index];
 
-            return ListTile(
-              title: item.buildTitle(context),
-              subtitle: item.buildSubtitle(context),
-            );
-          },
-        ),
+          return ListTile(
+            title: item.buildTitle(context),
+            subtitle: item.buildSubtitle(context),
+          );
+        },
+      ),
     );
   }
 }
@@ -1096,7 +1099,6 @@ class MessageItem implements ListItem {
   Widget buildSubtitle(BuildContext context) => Text(body);
 }
 
-
 //custom navigation(Assignment 6)
 
 class CustomNavigation extends StatelessWidget {
@@ -1107,9 +1109,8 @@ class CustomNavigation extends StatelessWidget {
     return MaterialApp(
       routes: {
         ExtractArgumentsScreen.routeName: (context) =>
-        const ExtractArgumentsScreen(),
+            const ExtractArgumentsScreen(),
       },
-
       onGenerateRoute: (settings) {
         // If you push the PassArguments route
         if (settings.name == PassArgumentsScreen.routeName) {
@@ -1133,64 +1134,65 @@ class CustomNavigation extends StatelessWidget {
         assert(false, 'Need to implement ${settings.name}');
         return null;
       },
-
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
-              icon:const Icon(Icons.arrow_back_rounded),
+              icon: const Icon(Icons.arrow_back_rounded),
               //replace with our own icon data.
             ),
             bottom: const TabBar(
               tabs: [
                 Tab(text: "Hero"),
                 Tab(text: "Intent"),
-                Tab(text: "DPass",),
-                Tab(text: "CallbackI",)
+                Tab(
+                  text: "DPass",
+                ),
+                Tab(
+                  text: "CallbackI",
+                )
               ],
             ),
             title: const Text('Custom Navigations'),
           ),
-          body:  TabBarView(
-              children: [
-                // child1
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const DetailScreen();
-                      }));
-                    },
-                    child: Hero(
-                      tag: 'imageHero',
-                      child: Image.network(
-                        'https://picsum.photos/250?image=9',
-                      ),
-                    ),
+          body: TabBarView(children: [
+            // child1
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const DetailScreen();
+                  }));
+                },
+                child: Hero(
+                  tag: 'imageHero',
+                  child: Image.network(
+                    'https://picsum.photos/250?image=9',
                   ),
                 ),
+              ),
+            ),
 
-                // child2
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Go back!'),
-                  ),
-                ),
+            // child2
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Go back!'),
+              ),
+            ),
 
-                // child3
-                const HomeScreen1(),
+            // child3
+            const HomeScreen1(),
 
-                // child4
-                const CallbackScreen(),
-              ]
-          ),
+            // child4
+            const CallbackScreen(),
+          ]),
         ),
       ),
     );
@@ -1241,15 +1243,12 @@ class SecondRoute extends StatelessWidget {
   }
 }
 
-
-
 class HomeScreen1 extends StatelessWidget {
   const HomeScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1301,7 +1300,6 @@ class HomeScreen1 extends StatelessWidget {
     );
   }
 }
-
 
 class ExtractArgumentsScreen extends StatelessWidget {
   const ExtractArgumentsScreen({super.key});
@@ -1394,7 +1392,6 @@ class CallbackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-
       body: Center(
         child: SelectionButton(),
       ),
@@ -1529,10 +1526,10 @@ class APINetworking1 extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
-              icon:const Icon(Icons.arrow_back_rounded),
+              icon: const Icon(Icons.arrow_back_rounded),
               //replace with our own icon data.
             ),
             bottom: const TabBar(
@@ -1543,13 +1540,10 @@ class APINetworking1 extends StatelessWidget {
             ),
             title: const Text('Network and API'),
           ),
-          body:  const TabBarView(
-              children: [
-                FetchData(),
-                APINetworking(),
-
-              ]
-          ),
+          body: const TabBarView(children: [
+            FetchData(),
+            APINetworking(),
+          ]),
         ),
       ),
     );
@@ -1575,7 +1569,6 @@ class _MyAppState extends State<APINetworking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: FutureBuilder<Album>(
           future: futureAlbum,
@@ -1653,11 +1646,9 @@ class Photo {
 class FetchData extends StatelessWidget {
   const FetchData({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: FutureBuilder<List<Photo>>(
         future: fetchPhotos(http.Client()),
         builder: (context, snapshot) {
