@@ -7,14 +7,43 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+import 'model_theme.dart';
 
 void main() {
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Page1(),
-    ),
-  );
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  MyApp1 createState() => MyApp1();
+}
+
+class MyApp1 extends State<MyApp> {
+  
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => ModelTheme(),
+      child: Consumer<ModelTheme>(
+          builder: (context, ModelTheme themeNotifier, child) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: themeNotifier.isDark
+              ? ThemeData(
+                  brightness: Brightness.dark,
+                )
+              : ThemeData(
+                  brightness: Brightness.light,
+                  ),
+          darkTheme: ThemeData.dark(),
+          themeMode: ThemeMode.system,
+          debugShowCheckedModeBanner: false,
+          home: const Page1(),
+        );
+      }),
+    );
+  }
 }
 
 class Page1 extends StatelessWidget {
@@ -22,120 +51,133 @@ class Page1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Course Assignments 🤟'),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment1());
-              },
-              child: Text(
-                'Assignment 1',
-                style: GoogleFonts.getFont('Lato',
-                    fontSize: 15, fontWeight: FontWeight.bold),
+    return Consumer<ModelTheme>(
+        builder: (context, ModelTheme themeNotifier, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter Course Assignments 🤟'),
+          actions: [
+            IconButton(
+                icon: Icon(themeNotifier.isDark
+                    ? Icons.nightlight_round
+                    : Icons.wb_sunny),
+                onPressed: () {
+                  themeNotifier.isDark
+                      ? themeNotifier.isDark = false
+                      : themeNotifier.isDark = true;
+                })
+          ],
+        ),
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment1());
+                },
+                child: Text(
+                  'Assignment 1',
+                  style: GoogleFonts.getFont('Lato',
+                      fontSize: 15, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment2());
-              },
-              child: Text(
-                'Assignment 2',
-                style: GoogleFonts.getFont('Anybody',
-                    fontSize: 12, fontWeight: FontWeight.bold),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment2());
+                },
+                child: Text(
+                  'Assignment 2',
+                  style: GoogleFonts.getFont('Anybody',
+                      fontSize: 12, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment3());
-              },
-              child: Text(
-                'Assignment 3',
-                style: GoogleFonts.getFont('Sevillana', fontSize: 18),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment3());
+                },
+                child: Text(
+                  'Assignment 3',
+                  style: GoogleFonts.getFont('Sevillana', fontSize: 18),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment4());
-              },
-              child: Text(
-                'Assignment 4',
-                style: GoogleFonts.getFont('Caveat',
-                    fontSize: 20, fontWeight: FontWeight.bold),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment4());
+                },
+                child: Text(
+                  'Assignment 4',
+                  style: GoogleFonts.getFont('Caveat',
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment5());
-              },
-              child: Text(
-                'Assignment 5',
-                style: GoogleFonts.getFont('Pacifico',
-                    fontSize: 16, fontWeight: FontWeight.bold),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment5());
+                },
+                child: Text(
+                  'Assignment 5',
+                  style: GoogleFonts.getFont('Pacifico',
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment6());
-              },
-              child: Text(
-                'Assignment 6',
-                style: GoogleFonts.getFont('Lilita One',
-                    fontSize: 16, fontWeight: FontWeight.bold),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment6());
+                },
+                child: Text(
+                  'Assignment 6',
+                  style: GoogleFonts.getFont('Lilita One',
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(_assignment7());
-              },
-              child: Text(
-                'Assignment 7',
-                style: GoogleFonts.getFont('IBM Plex Mono',
-                    fontSize: 13, fontWeight: FontWeight.w900),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(_assignment7());
+                },
+                child: Text(
+                  'Assignment 7',
+                  style: GoogleFonts.getFont('IBM Plex Mono',
+                      fontSize: 13, fontWeight: FontWeight.w900),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -295,8 +337,8 @@ class PhysicsCardDragDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -454,22 +496,18 @@ class MyCustomForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Form Validation Demo';
-
-    return MaterialApp(
-      title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back_rounded),
-            //replace with our own icon data.
-          ),
-          title: const Text(appTitle),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_rounded),
+          //replace with our own icon data.
         ),
-        body: const MyCustomFormHelper(),
+        title: const Text(appTitle),
       ),
+      body: const MyCustomFormHelper(),
     );
   }
 }
@@ -610,21 +648,18 @@ class FormApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Sign Up Form';
 
-    return MaterialApp(
-      title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back_rounded),
-            //replace with our own icon data.
-          ),
-          title: const Text(appTitle),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_rounded),
+          //replace with our own icon data.
         ),
-        body: const SignUpForm(),
+        title: const Text(appTitle),
       ),
+      body: const SignUpForm(),
     );
   }
 }
@@ -880,8 +915,8 @@ class ImagesDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 4,
         child: Scaffold(
           appBar: AppBar(
@@ -933,8 +968,8 @@ class GridList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -1106,35 +1141,8 @@ class CustomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        ExtractArgumentsScreen.routeName: (context) =>
-            const ExtractArgumentsScreen(),
-      },
-      onGenerateRoute: (settings) {
-        // If you push the PassArguments route
-        if (settings.name == PassArgumentsScreen.routeName) {
-          // Cast the arguments to the correct
-          // type: ScreenArguments.
-          final args = settings.arguments as ScreenArguments;
-
-          // Then, extract the required data from
-          // the arguments and pass the data to the
-          // correct screen.
-          return MaterialPageRoute(
-            builder: (context) {
-              return PassArgumentsScreen(
-                title: args.title,
-                message: args.message,
-              );
-            },
-          );
-        }
-
-        assert(false, 'Need to implement ${settings.name}');
-        return null;
-      },
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 4,
         child: Scaffold(
           appBar: AppBar(
@@ -1520,8 +1528,8 @@ class APINetworking1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -1687,3 +1695,4 @@ class PhotosList extends StatelessWidget {
     );
   }
 }
+//changing theme across the app
